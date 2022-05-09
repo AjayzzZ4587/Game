@@ -16,6 +16,7 @@ public class Drag : MonoBehaviour
         private Vector3 worldPos;
 
         private bool CanDraw = true;
+        private bool OnDrawing = false;
 
 
         void OnMouseDown()
@@ -36,6 +37,7 @@ public class Drag : MonoBehaviour
                 curPos = new Vector3(Input.mousePosition.x - posX, Input.mousePosition.y - posY, dist.z);
                 worldPos = Camera.main.ScreenToWorldPoint(curPos);
                 transform.position = worldPos;
+                OnDrawing = true;
             }
             
         }
@@ -48,6 +50,28 @@ public class Drag : MonoBehaviour
             // Tmp_curPos = curPos;
             // Cursor.lockState = CursorLockMode.Locked;
             // transform.position = Tmp_worldPos;
+            if (OnDrawing) 
+            {   
+                if (this.gameObject.tag == "KingSlime") 
+                {
+                    if (this.gameObject.tag == other.gameObject.tag)
+                    {
+                        Vector3 centerPos = (this.transform.position + other.transform.position) /2;
+                        Instantiate(this.gameObject, centerPos, this.gameObject.transform.rotation);
+                        Destroy(other.gameObject);
+                        Destroy(this.gameObject);      
+                    }  
+                }
+                else
+                {
+                    if (this.gameObject.tag == other.gameObject.tag)
+                    {
+                    Destroy(other.gameObject);
+                    Destroy(this.gameObject);      
+                    }  
+                }
+                
+            }
         }
 
         private void OnCollisionExit2D(Collision2D other) {
@@ -70,7 +94,7 @@ public class Drag : MonoBehaviour
         }
         IEnumerator DelayFunc()
         {
-            //double delay = 0.1;
+            //double delay = 0.1;7yuuuuuuu
             yield return new WaitForSeconds(0.05f);
             CanDraw = false;
             //yield return new WaitForSeconds(delay);

@@ -7,7 +7,7 @@ public class MainObjectsLoader : MonoBehaviour
    
     public GameObject UIScreen;
     //public GameObject player;
-
+    public GameObject gameMan;
 
     void Start()
     {
@@ -16,7 +16,10 @@ public class MainObjectsLoader : MonoBehaviour
             ScreenFade.instance = Instantiate(UIScreen).GetComponent<ScreenFade>();
         }
 
-
+        if (GameManager.instance == null)
+        {
+            GameManager.instance = Instantiate(gameMan).GetComponent<GameManager>();
+        }
     }
 
    
